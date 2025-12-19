@@ -34,8 +34,9 @@ const menu = {
 
 /**
  * Health Check
+ * URL → /api/health
  */
-app.get("/api/health", (req, res) => {
+app.get("/health", (req, res) => {
   res.json({
     status: "OK",
     service: "Food Delivery Backend",
@@ -45,15 +46,17 @@ app.get("/api/health", (req, res) => {
 
 /**
  * Get restaurants
+ * URL → /api/restaurants
  */
-app.get("/api/restaurants", (req, res) => {
+app.get("/restaurants", (req, res) => {
   res.json(restaurants);
 });
 
 /**
  * Get menu by restaurant
+ * URL → /api/restaurants/:id/menu
  */
-app.get("/api/restaurants/:id/menu", (req, res) => {
+app.get("/restaurants/:id/menu", (req, res) => {
   const data = menu[req.params.id];
   if (!data) {
     return res.status(404).json({ error: "Restaurant not found" });
@@ -63,8 +66,9 @@ app.get("/api/restaurants/:id/menu", (req, res) => {
 
 /**
  * Place order
+ * URL → /api/order
  */
-app.post("/api/order", (req, res) => {
+app.post("/order", (req, res) => {
   const { restaurantId, items } = req.body;
 
   if (!restaurantId || !items?.length) {
@@ -79,8 +83,7 @@ app.post("/api/order", (req, res) => {
 });
 
 /**
- * IMPORTANT:
  * ❌ No app.listen()
- * ✅ Export app
+ * ✅ Export app for Vercel
  */
 export default app;
